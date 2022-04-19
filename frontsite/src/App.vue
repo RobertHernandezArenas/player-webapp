@@ -1,26 +1,27 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-import MenuBar from './components/MenuBar.vue'
+//import HelloWorld from './components/HelloWorld.vue'
+import MenuBar from "./components/Menu/MenuBar.vue";
 </script>
 
 <template>
-  <MenuBar />
+	<MenuBar />
 </template>
 
 <style>
-
+@import "./assets/styles/reset.css";
+@import "./assets/fonts/SFProDisplay/index.css";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  background: #000;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 60px;
+	background: #000;
 }
 h1 {
-  color: black;
+	color: black;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-   <nav class="menu">
+	<nav class="menu">
 		<!-- LOGO -->
 		<div class="menu__logo">
 			<a class="menu__logo--link" :href="logo.link">
@@ -9,13 +9,12 @@
 					class="menu__logo--img"
 				/>
 				<h1 class="menu__logo--title">{{ logo.name }}</h1>
-                    <!-- <span>{{logo.slogan}}</span> -->
 			</a>
 		</div>
 		<!-- END LOGO -->
 
-          <!-- BURGER BUTTON -->
-		<div @click="menu" class="menu__burger">
+		<!-- BURGER BUTTON -->
+		<div class="menu__burger" @click="menu">
 			<div class="menu__strip menu__burger--strip">
 				<div class="menu__bar"></div>
 				<div class="menu__bar"></div>
@@ -24,8 +23,7 @@
 		</div>
 		<!-- END BURGER BUTTON -->
 
-
-          <!-- LINKS -->
+		<!-- LINKS -->
 		<ul class="menu__list">
 			<li
 				v-for="linky in links"
@@ -57,52 +55,47 @@
 			<!-- END SOCIAL ICON LINKS -->
 		</ul>
 		<!-- END LINKS -->
-		
 	</nav>
 </template>
 
 <script setup>
-import { ref, toRefs, reactive, computed } from 'vue';
+import { ref /*toRefs, reactive, computed*/ } from "vue";
 /** ****************************************************************************************** */
-// REACTVE para declarar propiedades dentro de reactive tengo que abrir siempre un objeto y tener en cuenta 
-// que va aa ser reactivo a todos sus niveles , es decir que va a mutar y se modificara el mismo objeto , 
+// REACTVE para declarar propiedades dentro de reactive tengo que abrir siempre un objeto y tener en cuenta
+// que va aa ser reactivo a todos sus niveles , es decir que va a mutar y se modificara el mismo objeto ,
 // para solucionar esto se debe hacer una copia del objeto y para hacer destructuring es recomendable usar [TOREFS(obj)]
 // esto no pasa con [REF]
 
 // Para acceder a los valores de [REF] tengo que usar su propiedad value [REF].value
 const logo = ref({
-     link: '/',
-     image:"./logo.png",
-     name: 'Luis Quintero',
-     slogan: 'Descripción de la web aquí',
-     alternative_text: 'Ah caray!'
+	link: "/",
+	image: "./logo.png",
+	name: "LQ10",
+	alternative_text: "Luis Quintero",
 });
 
-
-const hasTitle = () => (!(logo.value.name.match(/^\s/g) || logo.value.name.length <= 0));
-
 const menu = () => {
-  const burger = document.querySelector('.menu__burger');
-  const menuList = document.querySelector('.menu__list');
-  const mobileMenuIsOpen = menuList.classList.toggle('menu__show');
-  const barsBurger = document.querySelectorAll('.menu__bar');
-  const bar1 = document.querySelector('.menu__bar:first-child');
-  const bar2 = document.querySelector('.menu__bar:nth-child(2)');
-  const bar3 = document.querySelector('.menu__bar:last-child');
+	const burger = document.querySelector(".menu__burger");
+	const menuList = document.querySelector(".menu__list");
+	const mobileMenuIsOpen = menuList.classList.toggle("menu__show");
+	const barsBurger = document.querySelectorAll(".menu__bar");
+	const bar1 = document.querySelector(".menu__bar:first-child");
+	const bar2 = document.querySelector(".menu__bar:nth-child(2)");
+	const bar3 = document.querySelector(".menu__bar:last-child");
 
-  mobileMenuIsOpen
-    ? barsBurger.forEach((bar) => {
-      // bar.style.backgroundColor = "red";
-      burger.style.backgroundColor = 'var(--themeColor)';
-      // burger.style.borderRadius = "50%";
-    })
-    : barsBurger.forEach((bar) => {
-      bar.style.backgroundColor = 'var(--darkColor)';
-      burger.style.backgroundColor = 'var(--themeColor)';
-    });
-  bar1.classList.toggle('menu__bar1');
-  bar2.classList.toggle('menu__bar2');
-  bar3.classList.toggle('menu__bar3');
+	mobileMenuIsOpen
+		? barsBurger.forEach(() => {
+				// bar.style.backgroundColor = "red";
+				burger.style.backgroundColor = "var(--themeColor)";
+				// burger.style.borderRadius = "50%";
+		  })
+		: barsBurger.forEach(bar => {
+				bar.style.backgroundColor = "var(--darkColor)";
+				burger.style.backgroundColor = "var(--themeColor)";
+		  });
+	bar1.classList.toggle("menu__bar1");
+	bar2.classList.toggle("menu__bar2");
+	bar3.classList.toggle("menu__bar3");
 };
 /*const menuProps = reactive({
   image: require('../../public/logoluiscara.png'),
@@ -145,7 +138,6 @@ const menu = () => {
 </script>
 
 <style scoped>
-
 .menu {
 	display: flex;
 	align-items: center;
@@ -157,32 +149,10 @@ const menu = () => {
 }
 
 /* :::::::::: LOGO :::::::::: */
-.menu__logo {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-}
-.menu__logo--img {
-	height: 40px;
-}
-.menu__logo--link {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: var(--white);
-	text-decoration: none;
-	gap: 16px;
-	width: 100%;
-}
 .menu__logo--title {
-	/* display: none; */
-	font-size: 40px;
-	text-align: center;
-	color: white;
-	font-family: "Built Titling Rg", sans-serif;
-	font-weight: normal;
-	font-style: normal;
-	letter-spacing: 1px;
+	font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial,
+		sans-serif;
+	font-weight: 900;
 }
 
 /* :::::::::: BURGER BUTTON :::::::::: */
@@ -324,19 +294,8 @@ const menu = () => {
 	filter: invert(49%) sepia(44%) saturate(7496%) hue-rotate(218deg)
 		brightness(91%) contrast(92%);
 }
-
-.menu__list-social--icon[alt="instagram"]:hover {
-}
 .menu__list-social--icon[alt="youtube"]:hover {
 	filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg)
 		saturate(1600%) contrast(1);
-}
-
-/* :::::::::: MEDIA QUERIES :::::::::: */
-@media only screen and (min-width: 768px) {
-}
-@media only screen and (min-width: 1024px) {
-}
-@media only screen and (min-width: 1200px) {
 }
 </style>
