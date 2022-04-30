@@ -13,13 +13,11 @@ import MenuBar from "./components/Menu/MenuBar.vue";
 @import "./assets/styles/reset.css";
 @import "./assets/fonts/SFProDisplay/index.css";
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: "SF Pro Display", Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
-	background: #000;
 }
 h1 {
 	color: black;

@@ -1,45 +1,50 @@
 <template>
 	<nav class="menu">
 		<!-- LOGO -->
-		<div class="menu__logo">
-			<a class="menu__logo--link" :href="logo.link">
-				<img
-					:src="logo.image"
-					:alt="logo.alternative_text"
-					class="menu__logo--img"
-				/>
-				<h1 class="menu__logo--title">{{ logo.name }}</h1>
-			</a>
+		<div class="menu-container-logo">
+			<img
+				class="menu-container-logo__image"
+				:src="data.logo.image"
+				:alt="data.logo.alternative_text"
+			/>
+
+			<div class="menu-container-logo__namesite">
+				<a class="menu-container-logo__link" :href="data.logo.link">
+					<h1 v-if="hasTitle()" class="menu-container-logo__title">
+						{{ data.logo.name }}
+					</h1>
+				</a>
+				<span v-if="hasSlogan()" class="menu-container-logo__slogan">{{
+					data.logo.slogan
+				}}</span>
+			</div>
 		</div>
-		<!-- END LOGO -->
 
 		<!-- BURGER BUTTON -->
-		<div class="menu__burger" @click="menu">
+		<div class="menu__burger" @click.prevent="menuFX">
 			<div class="menu__strip menu__burger--strip">
 				<div class="menu__bar"></div>
 				<div class="menu__bar"></div>
 				<div class="menu__bar"></div>
 			</div>
 		</div>
-		<!-- END BURGER BUTTON -->
 
 		<!-- LINKS -->
 		<ul class="menu__list">
 			<li
-				v-for="linky in links"
+				v-for="linky in data.navigation"
 				:key="linky.id"
 				class="menu__list--item progress-bar-fx"
 			>
 				<a :href="linky.href" class="menu__list--link">{{ linky.name }}</a>
 			</li>
-			<!-- END LINKS -->
 
 			<!-- SOCIAL ICON LINKS -->
 			<div class="menu__list-social--container">
 				<span class="menu__list-social--title">follow me</span>
 				<ul class="menu__list-social">
 					<li
-						v-for="social in socialLogos"
+						v-for="social in data.socialLogos"
 						:key="social.id"
 						class="menu__list-social--item"
 					>
@@ -52,14 +57,12 @@
 					</li>
 				</ul>
 			</div>
-			<!-- END SOCIAL ICON LINKS -->
 		</ul>
-		<!-- END LINKS -->
 	</nav>
 </template>
 
 <script setup>
-import { ref /*toRefs, reactive, computed*/ } from "vue";
+import { ref /*reactive, toRefs, reactive, computed*/ } from "vue";
 /** ****************************************************************************************** */
 // REACTVE para declarar propiedades dentro de reactive tengo que abrir siempre un objeto y tener en cuenta
 // que va aa ser reactivo a todos sus niveles , es decir que va a mutar y se modificara el mismo objeto ,
@@ -67,120 +70,130 @@ import { ref /*toRefs, reactive, computed*/ } from "vue";
 // esto no pasa con [REF]
 
 // Para acceder a los valores de [REF] tengo que usar su propiedad value [REF].value
-const logo = ref({
-	link: "/",
-	image: "./logo.png",
-	name: "LQ10",
-	alternative_text: "Luis Quintero",
+const data = ref({
+	logo: {
+		link: "/",
+		image: "./logo-w.png",
+		name: "LQ10",
+		alternative_text: "Logo Luis Quintero",
+		slogan: "",
+	},
+	navigation: [
+		{ name: "Home", href: "#" },
+		{ name: "About me", href: "http://172.21.2.38:8080/" },
+		{ name: "Hightlights", href: "#" },
+		{ name: "Gallery", href: "#" },
+		{ name: "Contact", href: "#" },
+	],
+	socialLogos: [
+		{
+			name: "facebook",
+			logo: "./images/facebook.svg",
+			link: "#",
+		},
+		{
+			name: "instagram",
+			logo: "./images/instagram.svg",
+			link: "#",
+		},
+		{
+			name: "youtube",
+			logo: "./images/youtube.svg",
+			link: "#",
+		},
+	],
 });
 
-const menu = () => {
-	const burger = document.querySelector(".menu__burger");
-	const menuList = document.querySelector(".menu__list");
-	const mobileMenuIsOpen = menuList.classList.toggle("menu__show");
-	const barsBurger = document.querySelectorAll(".menu__bar");
-	const bar1 = document.querySelector(".menu__bar:first-child");
-	const bar2 = document.querySelector(".menu__bar:nth-child(2)");
-	const bar3 = document.querySelector(".menu__bar:last-child");
+const hasTitle = () => (data.value.logo.name.length > 0 ? true : false);
+const hasSlogan = () => (data.value.logo.slogan.length > 0 ? true : false);
+
+const menuFX = () => {
+	let burger = document.querySelector(".menu__burger");
+	let menuList = document.querySelector(".menu__list");
+	let mobileMenuIsOpen = menuList.classList.toggle("menu__show");
+	let barsBurger = document.querySelectorAll(".menu__bar");
+	let bar1 = document.querySelector(".menu__bar:first-child");
+	let bar2 = document.querySelector(".menu__bar:nth-child(2)");
+	let bar3 = document.querySelector(".menu__bar:last-child");
 
 	mobileMenuIsOpen
-		? barsBurger.forEach(() => {
-				// bar.style.backgroundColor = "red";
-				burger.style.backgroundColor = "var(--themeColor)";
-				// burger.style.borderRadius = "50%";
-		  })
+		? (burger.style.backgroundColor = "white")
 		: barsBurger.forEach(bar => {
-				bar.style.backgroundColor = "var(--darkColor)";
-				burger.style.backgroundColor = "var(--themeColor)";
+				bar.style.backgroundColor = "black";
+				burger.style.backgroundColor = "white";
 		  });
 	bar1.classList.toggle("menu__bar1");
 	bar2.classList.toggle("menu__bar2");
 	bar3.classList.toggle("menu__bar3");
 };
-/*const menuProps = reactive({
-  image: require('../../public/logoluiscara.png'),
-  description: 'Logo de la Web',
-  icon: [
-    {
-      name: 'closeButton',
-      image: require('../../public/x-square-fill.svg'),
-    },
-    {
-      name: 'facebook',
-      image: require('../../public/facebook.svg'),
-      link: '#',
-    },
-    {
-      name: 'instagram',
-      image: require('../../public/instagram.svg'),
-      link: '#',
-    },
-    {
-      name: 'youtube',
-      image: require('../../public/youtube.svg'),
-      link: '#',
-    },
-  ],
-  links: [
-    { name: 'Home', href: '#' },
-    { name: 'About me', href: 'http://172.21.2.38:8080/' },
-    { name: 'Hightlights', href: '#' },
-    { name: 'Gallery', href: '#' },
-    { name: 'Contact', href: '#' },
-  ],
-  showTitle: true,
-});
 
-
-
-*/
 /** ****************************************************************************************** */
 </script>
 
 <style scoped>
 .menu {
 	display: flex;
-	align-items: center;
-	background: var(--darkColor);
-	height: 80px;
-	justify-content: space-around;
-	width: 100vw;
-	border-bottom: 0.5px solid var(--themeColor);
+	justify-content: space-between;
+	background-color: black;
+	padding: 16px 24px;
+	max-height: 72px;
 }
 
-/* :::::::::: LOGO :::::::::: */
-.menu__logo--title {
-	font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial,
-		sans-serif;
-	font-weight: 900;
+.menu-container-logo {
+	display: flex;
+	gap: 8px;
+}
+.menu-container-logo__link {
+	display: block;
+	text-decoration: none;
+}
+.menu-container-logo__image {
+	object-fit: scale-down;
+	width: 32px;
+}
+.menu-container-logo__link {
+}
+.menu-container-logo__namesite {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.menu-container-logo__title {
+	color: white;
+	font-family: "SF Pro Display";
+	font-weight: 800;
+	text-align: start;
+}
+.menu-container-logo__slogan {
+	color: white;
+	font-size: 14px;
 }
 
 /* :::::::::: BURGER BUTTON :::::::::: */
 .menu__burger {
-	width: 32px;
-	height: 32px;
+	width: 40px;
 	border-radius: 2px;
-	background-color: white;
+	background-color: black;
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transition: all 0.5s ease;
+	transition: all 0.6s ease;
 }
 .menu__burger--strip {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	transition: all 0.5s ease;
+	transition: all 0.7s ease;
 }
 .menu__strip .menu__bar {
-	height: 2px;
+	height: 4px;
 	border-radius: 8px;
-	background-color: var(--darkColor);
+	background-color: white;
 	margin: 2px;
 	transition: all 0.55s cubic-bezier(0.075, 0.82, 0.165, 1);
-	width: 16px;
+	width: 24px;
 }
 .menu__bar1 {
 	background-color: yellow;
@@ -197,17 +210,16 @@ const menu = () => {
 /* :::::::::: LINKS :::::::::: */
 .menu__list {
 	align-items: center;
-	background-color: var(--darkColor);
-	background: url("../assets/landingpage_bg1.jpg");
+	background-color: black;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	height: calc(100vh - 80px);
+	height: calc(100vh - 70px);
 	justify-content: center;
 	list-style: none;
 	opacity: 0;
 	position: absolute;
-	top: 80px;
+	top: 70px;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -229,10 +241,10 @@ const menu = () => {
 	position: relative;
 }
 .menu__list--link:hover {
-	color: var(--themeColor);
+	color: yellow;
 }
 .menu__list--link {
-	color: var(--white);
+	color: white;
 	text-decoration: none;
 }
 
@@ -244,7 +256,7 @@ const menu = () => {
 	top: 100%;
 	width: 0;
 	height: 2px;
-	background-color: var(--themeColor);
+	background-color: yellow;
 	display: block;
 	content: "";
 	transition: width 0.45s ease-in-out;
@@ -293,6 +305,9 @@ const menu = () => {
 .menu__list-social--icon[alt="facebook"]:hover {
 	filter: invert(49%) sepia(44%) saturate(7496%) hue-rotate(218deg)
 		brightness(91%) contrast(92%);
+}
+
+.menu__list-social--icon[alt="instagram"]:hover {
 }
 .menu__list-social--icon[alt="youtube"]:hover {
 	filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg)
